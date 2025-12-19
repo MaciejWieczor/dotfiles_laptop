@@ -1,0 +1,5 @@
+# For now just ignore the whole /home
+*
+
+!.gitignore
+!.scripts/git-scripts
