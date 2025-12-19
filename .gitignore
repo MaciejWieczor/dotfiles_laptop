@@ -1,0 +1,7 @@
+# For now just ignore the whole /home
+/*
+/*/
+
+!/.scripts
+/.scripts/*
+!/.scripts/git-scripts
