@@ -1,0 +1,23 @@
+customCommands:
+  - key: "B"
+    command: "xsel -ob | b4 am -t -o - | git am -s -3"
+    context: "localBranches"
+    loadingText: "B4 with message from clipboard"
+    description: "Use message in clipboard with b4 to apply patches from a ML"
+  - key: "D"
+    command: "git branch {{.SelectedLocalBranch.Name}} --edit-description"
+    context: "localBranches"
+    description: "Edit branch description that can be used as a cover letter"
+    output: terminal
+  - key: "E"
+    command: "git reset HEAD~1"
+    context: "commits"
+    description: "Reset HEAD~1 to unstage the files"
+    output: terminal
+keybinding:
+  commits:
+    moveDownCommit: 'D'
+    moveUpCommit: 'U'
+git:
+  commit:
+    signOff: true

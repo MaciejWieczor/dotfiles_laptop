@@ -29,3 +29,7 @@
 !/.config/i3blocks/
 
 !/.config/ranger/
+
+!/.config/lazygit/
+/.config/lazygit/*
+!/.config/lazygit/config.yml
