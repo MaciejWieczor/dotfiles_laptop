@@ -6,7 +6,7 @@ terminal_open() {
 	else
 		FONT=""
 	fi
-	alacritty $FONT --hold -e $1
+	alacritty $FONT "$@"
 }
 
 timer_start () {

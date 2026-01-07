@@ -19,7 +19,7 @@ bindsym XF86MonBrightnessDown exec light -U 10 && $refresh_i3blocks
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open"
 
 # kill focused window
 bindsym $mod+Shift+q kill
