@@ -161,8 +161,8 @@ set $mode_terminal Terminal: [t]erminal, [y]outube, [n]ews
 bindsym $mod+t mode "$mode_terminal"
 
 mode "$mode_terminal" {
-	bindsym t exec "$C_SCRIPT_DIR/alacritty.sh"; mode "default"
-	bindsym n exec "$C_SCRIPT_DIR/alacritty.sh -e newsboat"; mode "default"
+	bindsym t exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open "; mode "default"
+	bindsym n exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open  -e newsboat"; mode "default"
 	bindsym y exec "~/bin/youtube-watch"; mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -196,7 +196,7 @@ bindsym $mod+c mode "$mode_cmds"
 mode "$mode_cmds" {
 	bindsym a exec "bash -c $C_SCRIPT_DIR/command_archive.sh"; mode "default"
 	bindsym k exec "bash -c $C_SCRIPT_DIR/command_archive_parser.sh"; mode "default"
-	bindsym e exec "$C_SCRIPT_DIR/alacritty.sh -e nvim $C_CMD_ARCHIVE"; mode "default"
+	bindsym e exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open  -e nvim $C_CMD_ARCHIVE"; mode "default"
 	# bindsym 0 exec "notify-send 'Skróty archiwum komend' 'b -> archiwum\nc -> kategorie\ne -> edytuj zakładki'"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -208,7 +208,7 @@ bindsym $mod+b mode "$mode_bookmarks"
 mode "$mode_bookmarks" {
 	bindsym a exec "bash -c $C_SCRIPT_DIR/bookmark_archive.sh"; mode "default"
 	bindsym k exec "bash -c $C_SCRIPT_DIR/bookmark_parser.sh"; mode "default"
-	bindsym e exec "$C_SCRIPT_DIR/alacritty.sh -e nvim $C_BOOKMARKS"; mode "default"
+	bindsym e exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open  -e nvim $C_BOOKMARKS"; mode "default"
 	# bindsym 0 exec "notify-send 'Skróty zakładek' 'b -> archiwum\nc -> kategorie\ne -> edytuj zakładki'"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
