@@ -17,7 +17,7 @@
 !/.scripts/stopwatch.sh
 !/.scripts/timer_dmenu.sh
 !/.scripts/powerdmenu.sh
-
+!/.scripts/emoji_picker.sh
 !/.scripts/ss*
 
 !/.config/
