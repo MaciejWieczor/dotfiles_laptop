@@ -14,6 +14,8 @@
 !/.scripts/command*
 
 !/.scripts/dmenu_notes.sh
+!/.scripts/stopwatch.sh
+!/.scripts/timer_dmenu.sh
 
 !/.config/
 /.config/*
