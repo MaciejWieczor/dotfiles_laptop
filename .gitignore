@@ -18,6 +18,8 @@
 !/.scripts/timer_dmenu.sh
 !/.scripts/powerdmenu.sh
 
+!/.scripts/ss*
+
 !/.config/
 /.config/*
 !/.config/i3
