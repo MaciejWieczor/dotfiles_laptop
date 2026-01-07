@@ -26,68 +26,6 @@ timer_menu () {
 		esac
 }
 
-transfer () { # pull photos from sd card into a folder for today's date
-
-	mount() { # Check if the card is mounted
-			sudo mount /dev/sda1 /mnt/sdcard && notify-send "SD zamontowane."
-			[ -d /mnt/sdcard/DCIM/ ] || notify-send "SD nie zamontowane."
-
-	}
-
-	unmount() { # Unmount card
-			sudo umount /mnt/sdcard && notify-send "SD odmontowane"
-	}
-
-	dt() { # Open darktable to import today's photos
-			sudo umount /mnt/sdcard && notify-send "SD odmontowane, otwieranie Darktable"
-			(darktable "$C_PHOTO_DIR$(date '+%b_%d')") &
-	}
-
-	postrun() { # Menu to select what I want to do after photos have been transferred
-			notify-send "Zdjęcia przerzucono."
-			choice=$(printf "Odmontuj SD\\nOtwórz Darktable, odmontuj\\nNic nie rób" | c_dmenu -l 3 -p "Zdjęcia zrzucono: ")
-			case "$choice" in
-					Odmontuj*) unmount;;
-					Otwórz*) dt;;
-					Nic*) exit 0;;
-			esac
-	}
-
-	auto() { # Transfer photos from SD card into a directory for today's date
-			[ -d /mnt/sdcard/DCIM/ ] || mount
-			notify-send "Przerzucanie zdjęć rozpoczęte..."
-
-			mkdir -p "$C_PHOTO_DIR/$(date '+%b_%d')"
-			find /mnt/sdcard -type f -name "*.NEF" -exec mv -nv {} "$C_PHOTO_DIR/$(date '+%b_%d')/" \; && postrun
-	}
-
-	case "$1" in
-			mount) mount ;;
-			unmount) unmount ;;
-			dt) dt ;;
-			*) auto ;;
-	esac
-}
-
-opendir () { # fuzzy find a dir to open in Darktable
-		CHOICE=$(echo -e "Wpisz ścieżkę...\n$(command ls -t1 $C_PHOTO_DIR)" | c_dmenu -l 10 -p "Directory: ") || exit 0
-				case $CHOICE in
-						*Wpisz*) PHOTODIR="$(echo "" | c_dmenu -p "󰄄 Open: " <&-)" || exit 0 ;;
-						*) PHOTODIR=$C_PHOTO_DIR/$CHOICE ;;
-				esac
-
-		darktable $PHOTODIR
-}
-
-photo_menu () {
-		CHOICE=$(printf "󱁥 zrzuć zdjęcia z SD\\n otwórz folder w darktable\\n󰈆 wyjście" | c_dmenu -l 4)
-		case "$CHOICE" in
-			*󱁥*) transfer ;;
-			**) opendir ;;
-			*󰈆*) exit ;;
-		esac
-}
-
 notatki () {
 	$C_SCRIPT_DIR/dmenu_notes.sh
 }
@@ -98,27 +36,6 @@ stopwatch_menu () {
 
 vit () {
 	terminal_open vit
-}
-
-krita_file () {
-		CHOICE=$(printf "$(ls $C_DRAWING_DIR/Krita/)" | c_dmenu -l 4) || return 0
-		krita $C_DRAWING_DIR/Krita/$CHOICE
-}
-
-milton_file () {
-		CHOICE=$(printf "$(ls $C_DRAWING_DIR/Milton/)" | c_dmenu -l 4) || return 0
-		$C_GITHUB_DIR/milton/build/Milton $C_DRAWING_DIR/Milton/$CHOICE
-}
-
-drawing_menu () {
-		CHOICE=$(printf "  krita\\n  milton\\n  milton plik\\n krita plik\\n󰈆  wyjście" | c_dmenu -l 5 -p "Menu Rysowania")
-		case "$CHOICE" in
-			**) krita ;;
-			**) $C_GITHUB_DIR/milton_fork/build/Milton ;;
-			**) milton_file ;;
-			**) krita_file ;;
-			*󰈆*) exit ;;
-		esac
 }
 
 cmd_archive () {
@@ -157,41 +74,15 @@ bookmark_menu () {
 		esac
 }
 
-music_player_menu () {
-		CHOICE=$(printf "󰈣 find song\\n󰈆 exit" | c_dmenu -l 4)
-		case "$CHOICE" in
-			*󰈣*) $C_SCRIPT_DIR/music_dmenu_picker.sh ;;
-			*󰈆*) exit ;;
-		esac
-}
-
-guitar_menu () {
-		CHOICE=$(printf "󰲹 open tab\\n󰈆 exit" | c_dmenu -l 4)
-		case "$CHOICE" in
-			*󰲹*) $C_SCRIPT_DIR/dmenu_tab_picker.sh ;;
-			*󰈆*) exit ;;
-		esac
-}
-
-video_cmd () {
-	CHOICE=$(printf "$(find ~/Wideo -type f -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p' | sort)" | c_dmenu -l 15)
-	mpv --save-position-on-quit $CHOICE
-}
-
 menu() {
-		CHOICE=$(printf "󱎫  minutnik\\n  stoper\\n  menu zdjęć\\n󰎄  music player\\n󰋄  guitar\\n󰽉  menu rysowania\\n  archiwum komend\\n  zakładki\\n  vit lista todo\\n  notatki\\n  filmy i seriale\\n󰈆  wyjście" | c_dmenu -l 100)
+		CHOICE=$(printf "󱎫  minutnik\\n  stoper\\n  archiwum komend\\n  zakładki\\n  vit lista todo\\n  notatki\\n󰈆  wyjście" | c_dmenu -l 100)
 		case "$CHOICE" in
 			*󱎫*) timer_menu ;;
 			**) stopwatch_menu ;;
-			**) photo_menu ;;
-			*󰎄*) music_player_menu ;;
-			*󰋄*) guitar_menu ;;
-			*󰽉*) drawing_menu ;;
 			**) notatki ;;
 			**) cmd_archive ;;
 			**) bookmark_menu ;;
 			**) vit ;;
-			**) video_cmd ;;
 			*󰈆*) exit ;;
 		esac
 }

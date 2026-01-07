@@ -47,13 +47,11 @@ ranczo_mode() {
 	esac
 }
 
-case "$(printf "󰆴 kill process\\n󰒲 zzz\\n󰜉 reboot\\n shutdown\\n󱗀 ranczo\\n anuluj ranczo\\n󰈆 exit menu" | c_dmenu -l 10)" in
+case "$(printf "󰆴 kill process\\n󰒲 zzz\\n󰜉 reboot\\n shutdown\\n󰈆 exit menu" | c_dmenu -l 10)" in
 	*󰆴*) ps -u $USER -o pid,comm,%cpu,%mem | dmenu -l 10 -p Kill: | awk '{print $1}' | xargs -r kill ;;
 	*󰒲*) slock systemctl suspend -i ;;
 	*󰜉*) systemctl reboot -i ;;
 	**) shutdown now ;;
-	*󱗀*) ranczo_mode init ;;
-	**) ranczo_mode cancel ;;
 	*󰈆*) exit ;;
 	*) exit 1 ;;
 esac

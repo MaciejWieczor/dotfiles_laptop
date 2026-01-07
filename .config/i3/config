@@ -141,40 +141,26 @@ bindsym $mod+0 exec "notify-send 'Moje skróty: ' '\
  +m -> kernel\n\
  +p -> programy\n\
  +q -> screenshot\n\
- +r -> rysowanie\n\
  +t -> terminal\n\
  +u -> utils\n\
  +x -> zasilanie\n\
 '"
 
-set $mode_rysowanie Rysowanie: [m]ilton, [k]rita
-bindsym $mod+r mode "$mode_rysowanie"
-
-mode "$mode_rysowanie" {
-	bindsym m exec "$C_SCRIPT_DIR/script_menu_utils.sh milton_file"; mode "default"
-	bindsym k exec "$C_SCRIPT_DIR/script_menu_utils.sh krita_file"; mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-
 set $mode_terminal Terminal: [t]erminal, [y]outube, [n]ews
 bindsym $mod+t mode "$mode_terminal"
 
 mode "$mode_terminal" {
-	bindsym t exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open "; mode "default"
-	bindsym n exec "$C_SCRIPT_DIR/script_menu_utils.sh terminal_open  -e newsboat"; mode "default"
-	bindsym y exec "~/bin/youtube-watch"; mode "default"
+	bindsym t exec "$C_SCRIPT_DIR/alacritty.sh"; mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 
-set $mode_utils Utils: [n]otatki, [e]dytor, [r]ysowanie
+set $mode_utils Utils: [n]otatki, [e]dytor
 bindsym $mod+u mode "$mode_utils"
 
 mode "$mode_utils" {
 	bindsym n exec "bash -c $C_SCRIPT_DIR/dmenu_notes.sh"; mode "default"
 	bindsym e exec "$C_SCRIPT_DIR/kernel_menu_utils.sh nvim_menu"; mode "default"
-	bindsym r exec "$C_SCRIPT_DIR/script_menu_utils.sh drawing_menu"; mode "default"
 	bindsym 0 exec "notify-send 'Pomocnicze skróty klawiszowe' 'e -> Neovim sesje\nn -> Notatki'"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -231,14 +217,10 @@ mode "$mode_photo" {
         bindsym $mod+q mode "default"
 }
 
-set $mode_programs Programy: [m]  , [s]  , [c] 󰭹 , [f] 󰈹 
+set $mode_programs Programy
 bindsym $mod+p mode "$mode_programs"
 
 mode "$mode_programs" {
-	bindsym m exec "$C_GITHUB_DIR/milton/build/Milton"; mode "default"
-	bindsym s exec "steam"; mode "default"
-	bindsym c exec "google-chat-linux"; mode "default"
-	bindsym f exec "firefox"; mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -266,9 +248,6 @@ for_window [class=.*] border pixel 3
 
 exec_always --no-startup-id x-on-resize --config ~/.config/i3/script.sh
 exec --no-startup-id source ~/.scripts/wallpaper_long.sh
-
-# this is for local music
-exec_always ~/.scripts/mpd_updater.sh
 
 # Colors - base wallpaper if there is no image
 exec --no-startup-id hsetroot -root -solid "#24273a"

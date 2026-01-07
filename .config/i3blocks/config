@@ -2,18 +2,9 @@
 command=./stopwatch.sh
 signal=3
 
-[shutdown_timer]
-command=./timer.sh ranczo
-signal=3
-
 [timer]
 command=./timer.sh minutnik
 signal=3
-
-[mpd]
-command=./mpd.sh
-interval=5
-signal=10
 
 # flags
 [perf_prof]
