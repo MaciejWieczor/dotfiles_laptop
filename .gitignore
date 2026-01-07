@@ -10,6 +10,8 @@
 !/.scripts/patchset_format.sh
 
 !/.scripts/script_menu_utils.sh
+!/.scripts/bookmark*
+!/.scripts/command*
 
 !/.config/
 /.config/*
