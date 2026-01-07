@@ -6,27 +6,31 @@ terminal_open() {
 	else
 		FONT=""
 	fi
-	alacritty $FONT --hold -e $@
+	alacritty $FONT $@
 }
 
-open_kernel_config () {
-		CHOICE=$(printf "Yes\\nNo\\n󰈆 exit" | c_dmenu -l 4 -p "Enable LLVM?") || exit 0
-		case "$CHOICE" in
-			*Yes*) LLVM="LLVM=1";;
-			*No*) LLVM="" ;;
-		esac
-		terminal_open "make -j10 $LLVM O=$C_KERNEL_BUILD nconfig"
+kernel_setup () {
+	CHOICE=$(printf "Yes\\nNo\\n󰈆 exit" | c_dmenu -l 4 -p "Enable LLVM?") || exit 0
+	case "$CHOICE" in
+		*Yes*) LLVM="LLVM=1";;
+		*No*) LLVM="" ;;
+	esac
+	cd $C_KERNEL_SRC
+	terminal_open --hold -e "make -j10 $LLVM O=$C_KERNEL_BUILD $@"
+}
 
+configure_kernel() {
+	kernel_setup "nconfig"
 }
 
 compile_kernel() {
-	exit 0
+	kernel_setup ""
 }
 
 build_menu () {
-	CHOICE=$(printf " open kernel config\\n󰣪 compile the kernel\\n󰈆 exit" | c_dmenu -l 4) || exit 0
+	CHOICE=$(printf " configure the kernel\\n󰣪 compile the kernel\\n󰈆 exit" | c_dmenu -l 10) || exit 0
 	case "$CHOICE" in
-		**) open_kernel_config ;;
+		**) configure_kernel ;;
 		*󰣪*) compile_kernel ;;
 		*󰈆*) exit ;;
 	esac
