@@ -5,3 +5,6 @@
 !/.scripts
 /.scripts/*
 !/.scripts/git-scripts
+!/.scripts/kernel_menu_utils.sh
+!/.scripts/patchset_helper.sh
+!/.scripts/patchset_format.sh
